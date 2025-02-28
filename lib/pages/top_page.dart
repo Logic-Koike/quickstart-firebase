@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:quickstart_firebase/components/list_data.dart';
 import 'package:quickstart_firebase/components/user_info_display.dart';
 
 class TopPage extends StatefulWidget {
@@ -10,24 +12,6 @@ class TopPage extends StatefulWidget {
 }
 
 class _TopPageState extends State<TopPage> {
-  String firebaseAuthStatus = "";
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   FirebaseAuth.instance.authStateChanges().listen((User? user) {
-  //     if (user == null) {
-  //       setState(() {
-  //         firebaseAuthStatus = "Not signed in";
-  //       });
-  //     } else {
-  //       setState(() {
-  //         firebaseAuthStatus = "Signed in: ${user.email}";
-  //       });
-  //     }
-  //   });
-  // }
-
   Future<void> _signout() async {
     await FirebaseAuth.instance.signOut();
   }
@@ -37,13 +21,18 @@ class _TopPageState extends State<TopPage> {
     return Center(
         child: Padding(
             padding: EdgeInsets.all(30),
-            child: ListView(children: [
-              UserInfoDisplay(),
-              ElevatedButton(
-                  onPressed: () async {
-                    await _signout();
-                  },
-                  child: Text("Sign Out")),
-            ])));
+            child: Column(
+              children: [
+                Column(children: [
+                  UserInfoDisplay(),
+                  ElevatedButton(
+                      onPressed: () async {
+                        await _signout();
+                      },
+                      child: Text("Sign Out")),
+                  ListData(),
+                ]),
+              ],
+            )));
   }
 }
