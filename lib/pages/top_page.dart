@@ -10,13 +10,8 @@ class TopPage extends StatefulWidget {
 class _TopPageState extends State<TopPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Top Page'),
-      ),
-      body: const Center(
-        child: Text('Top Page'),
-      ),
+    return const Center(
+      child: Text('Top Page'),
     );
   }
 }

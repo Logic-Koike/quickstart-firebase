@@ -89,11 +89,13 @@ class _MyHomePageState extends State<MyHomePage> {
           WidgetBuilder builder;
           switch (settings.name) {
             case '/top':
-              builder = (context) => Center(child: Text('ホーム画面'));
-              break;
+              return MaterialPageRoute(builder: (context) {
+                return TopPage();
+              });
             case '/login':
-              builder = (context) => Center(child: Text('設定画面'));
-              break;
+              return MaterialPageRoute(builder: (context) {
+                return LoginPage();
+              });
             default:
               builder = (context) => Center(child: Text('404'));
           }
