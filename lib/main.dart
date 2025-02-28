@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:quickstart_firebase/components/drawer_listtile.dart';
 import 'package:quickstart_firebase/pages/login_page.dart';
 import 'package:quickstart_firebase/pages/top_page.dart';
 import 'firebase_options.dart';
