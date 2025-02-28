@@ -21,7 +21,8 @@ class _UserInfoDisplayState extends State<UserInfoDisplay> {
         });
       } else {
         setState(() {
-          firebaseAuthStatus = "Signed in: ${user.email} uid: ${user.uid} ";
+          firebaseAuthStatus =
+              "Signed in: ${user.email} uid: ${user.uid} FIRESTORE_EMULATOR_HOST=${String.fromEnvironment("FIRESTORE_EMULATOR_HOST", defaultValue: "未設定")}";
         });
       }
     });

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:quickstart_firebase/pages/input_test_data_page.dart';
 import 'package:quickstart_firebase/pages/login_page.dart';
 import 'package:quickstart_firebase/pages/top_page.dart';
 import 'firebase_options.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/top': (context) => const TopPage(),
         '/login': (context) => const LoginPage(),
+        '/input': (context) => const InputTestDataPage(),
       },
     );
   }
@@ -78,6 +80,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pop(context);
               },
             ),
+            ListTile(
+              title: Text('データ登録'),
+              onTap: () {
+                _navigatorKey.currentState?.pushNamed('/input');
+                _updateTitle("input");
+                Navigator.pop(context);
+              },
+            ),
           ],
         ),
       ),
@@ -94,6 +104,10 @@ class _MyHomePageState extends State<MyHomePage> {
             case '/login':
               return MaterialPageRoute(builder: (context) {
                 return LoginPage();
+              });
+            case '/input':
+              return MaterialPageRoute(builder: (context) {
+                return InputTestDataPage();
               });
             default:
               builder = (context) => Center(child: Text('404'));
