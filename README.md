@@ -14,3 +14,15 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+
+## 開発環境の設定
+
+1. Google Cloud Consoleでプロジェクト作成
+2. Firebase Authenticationの設定
+3. firebase CLIをインストール
+4. `firebase login`でログイン
+5. `dart pub global activate flutterfire_cli`を実行
+6. プロジェクトディレクトリで`flutterfire configure --project=fir-test-3d89d`を実行
+    - プロジェクトごとにIDは異なる
+7. 
