@@ -3,13 +3,14 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:quickstart_firebase/core/model/danger_drive_marker.dart';
 
 class TestMarkers {
   static const osakaStation = LatLng(34.702485, 135.495951);
   static const maxClusterRadius = 100;
 
-  static List<Marker> getTestMakers() {
-    var markers = <Marker>[];
+  static List<DangerDriveMarker> getTestMakers() {
+    var markers = <DangerDriveMarker>[];
 
     final totalMarkers = 3000;
 
@@ -20,9 +21,11 @@ class TestMarkers {
 
     // 同一地点
     for (var i = 0; i < 30; i++) {
-      markers.add(Marker(
+      markers.add(DangerDriveMarker(
         point: osakaStation,
         child: const Icon(Icons.error),
+        dangerLevel: i % 3,
+        markerId: 'osakaStation_$i',
       ));
     }
 
@@ -32,43 +35,22 @@ class TestMarkers {
       final longitude =
           minLongitude + Random().nextDouble() * (maxLongitude - minLongitude);
 
-      markers.add(Marker(
+      var widget = null;
+      if (i % 3 == 0) {
+        widget = Icon(Icons.error, color: Colors.red);
+      } else if (i % 3 == 1) {
+        widget = Icon(Icons.warning, color: Colors.yellow);
+      } else {
+        widget = Icon(Icons.info, color: Colors.blue);
+      }
+
+      markers.add(DangerDriveMarker(
         point: LatLng(latitude, longitude),
-        child: const Icon(
-          Icons.pin_drop,
-          color: Colors.orange,
-        ),
+        child: widget,
+        dangerLevel: i % 3,
+        markerId: 'dangerdrive_$i',
       ));
     }
-
-    // final totalMarkers = 2000.0;
-    // final minLatLng = const LatLng(49.8566, 1.3522);
-    // final maxLatLng = const LatLng(58.3498, -10.2603);
-
-    // final latitudeRange = maxLatLng.latitude - minLatLng.latitude;
-    // final longitudeRange = maxLatLng.longitude - minLatLng.longitude;
-
-    // final stepsInEachDirection = sqrt(totalMarkers).floor();
-    // final latStep = latitudeRange / stepsInEachDirection;
-    // final lonStep = longitudeRange / stepsInEachDirection;
-
-    // for (var i = 0; i < stepsInEachDirection; i++) {
-    //   for (var j = 0; j < stepsInEachDirection; j++) {
-    //     final latLng = LatLng(
-    //       minLatLng.latitude + i * latStep,
-    //       minLatLng.longitude + j * lonStep,
-    //     );
-
-    //     markers.add(
-    //       Marker(
-    //         height: 30,
-    //         width: 30,
-    //         point: latLng,
-    //         child: const Icon(Icons.pin_drop),
-    //       ),
-    //     );
-    //   }
-    // }
 
     return markers;
   }

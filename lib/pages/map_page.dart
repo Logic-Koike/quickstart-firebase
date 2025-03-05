@@ -4,6 +4,7 @@ import 'package:flutter_map_animations/flutter_map_animations.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:quickstart_firebase/core/maptest/marker_widget.dart';
+import 'package:quickstart_firebase/core/model/danger_drive_marker.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({super.key});
@@ -37,11 +38,14 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
         child: FlutterMap(
             mapController: _animatedMapController.mapController,
             options: MapOptions(
-                initialCenter: initialPos, // Center the map over London
-                initialZoom: 10,
-                interactionOptions: InteractionOptions(
-                    enableMultiFingerGestureRace: true,
-                    flags: InteractiveFlag.drag | InteractiveFlag.pinchZoom)),
+              initialCenter: initialPos, // Center the map over London
+              initialZoom: 10,
+              interactionOptions: InteractionOptions(
+                  enableMultiFingerGestureRace: true,
+                  flags: InteractiveFlag.drag |
+                      InteractiveFlag.pinchZoom |
+                      InteractiveFlag.scrollWheelZoom),
+            ),
             children: [
               TileLayer(
                 urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -69,6 +73,9 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
                     popupOptions: PopupOptions(
                         popupController: _popupController,
                         popupBuilder: (context, marker) {
+                          // 実データにキャスト
+                          final dangerDriveMarker = marker as DangerDriveMarker;
+
                           return Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
@@ -76,7 +83,7 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
                               color: Colors.white,
                             ),
                             width: 200,
-                            height: 100,
+                            height: 200,
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Column(
@@ -88,8 +95,15 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  Text("緯度 ${marker.point.latitude}"),
-                                  Text("経度 ${marker.point.longitude}"),
+                                  Text(
+                                      "緯度 ${dangerDriveMarker.point.latitude}"),
+                                  Text(
+                                      "経度 ${dangerDriveMarker.point.longitude}"),
+                                  Text(
+                                      "危険運転種別 ${dangerDriveMarker.dangerLevel}"),
+                                  Text(
+                                    "ID : ${dangerDriveMarker.markerId}",
+                                  )
                                 ],
                               ),
                             ),
