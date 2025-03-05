@@ -4,6 +4,7 @@ import 'package:quickstart_firebase/pages/input_test_data_page.dart';
 import 'package:quickstart_firebase/pages/login_page.dart';
 import 'package:quickstart_firebase/pages/top_page.dart';
 import 'firebase_options.dart';
+import 'pages/map_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -88,18 +89,30 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pop(context);
               },
             ),
+            ListTile(
+              title: Text('マップ'),
+              onTap: () {
+                _navigatorKey.currentState?.pushReplacementNamed('/map');
+                _updateTitle("map");
+                Navigator.pop(context);
+              },
+            ),
           ],
         ),
       ),
       body: Navigator(
         key: _navigatorKey,
-        initialRoute: '/top',
+        initialRoute: '/map',
         onGenerateRoute: (settings) {
           WidgetBuilder builder;
           switch (settings.name) {
             case '/top':
               return MaterialPageRoute(builder: (context) {
                 return TopPage();
+              });
+            case "/map":
+              return MaterialPageRoute(builder: (context) {
+                return MapPage();
               });
             case '/login':
               return MaterialPageRoute(builder: (context) {
