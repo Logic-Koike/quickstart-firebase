@@ -13,9 +13,9 @@ class TestMarkers {
 
     final totalMarkers = 3000;
 
-    final minLatitude = 34.5;
-    final maxLatitude = 35.0;
-    final minLongitude = 135.0;
+    final minLatitude = 34.6;
+    final maxLatitude = 34.8;
+    final minLongitude = 135.3;
     final maxLongitude = 135.6;
 
     // 同一地点

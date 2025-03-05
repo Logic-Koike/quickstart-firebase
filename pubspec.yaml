@@ -40,6 +40,7 @@ dependencies:
   flutter_map: any
   flutter_map_marker_cluster: any
   latlong2: ^0.9.1
+  flutter_map_animations: ^0.8.0
 
 dev_dependencies:
   flutter_test:
