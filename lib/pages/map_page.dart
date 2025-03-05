@@ -37,13 +37,16 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
         child: FlutterMap(
             mapController: _animatedMapController.mapController,
             options: MapOptions(
-              initialCenter: initialPos, // Center the map over London
-              initialZoom: 10,
-            ),
+                initialCenter: initialPos, // Center the map over London
+                initialZoom: 10,
+                interactionOptions: InteractionOptions(
+                    enableMultiFingerGestureRace: true,
+                    flags: InteractiveFlag.drag | InteractiveFlag.pinchZoom)),
             children: [
               TileLayer(
-                urlTemplate:
-                    "https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png",
+                urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                // "https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png",
+                // "https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png",
                 userAgentPackageName:
                     'com.logic.exampleapp', // Add your app identifier
               ),
