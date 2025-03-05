@@ -13,6 +13,7 @@ class MapPage extends StatefulWidget {
 
 class _MapPageState extends State<MapPage> {
   final initialPos = LatLng(34.702485, 135.495951);
+  final PopupController _popupController = PopupController();
   late final List<Marker> markers;
 
   @override
@@ -24,7 +25,9 @@ class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      // child: Placeholder(child: Text("Map Page")),
+        // child: Placeholder(child: Text("Map Page")),
+        child: PopupScope(
+      popupController: _popupController,
       child: FlutterMap(
           options: MapOptions(
             initialCenter: initialPos, // Center the map over London
@@ -46,17 +49,46 @@ class _MapPageState extends State<MapPage> {
             ]),
             MarkerClusterLayerWidget(
               options: MarkerClusterLayerOptions(
-                  maxClusterRadius: 45,
+                  maxClusterRadius: TestMarkers.maxClusterRadius,
                   size: const Size(40, 40),
                   alignment: Alignment.center,
                   padding: const EdgeInsets.all(50),
                   maxZoom: 15,
                   markers: markers,
-                  onMarkerTap: (marker) {
-                    final snackBar = SnackBar(content: Text('Tap $initialPos'));
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  onClusterTap: (cluster) {
+                    _popupController.hideAllPopups();
                   },
+                  popupOptions: PopupOptions(
+                      popupController: _popupController,
+                      popupBuilder: (context, marker) {
+                        return Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(color: Colors.blue),
+                            color: Colors.white,
+                          ),
+                          width: 200,
+                          height: 100,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "ポップアップ表示",
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text("緯度 ${marker.point.latitude}"),
+                                Text("経度 ${marker.point.longitude}"),
+                              ],
+                            ),
+                          ),
+                        );
+                      }),
                   builder: (context, markers) {
+                    // クラスターの表示
                     return Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
@@ -70,38 +102,7 @@ class _MapPageState extends State<MapPage> {
                     );
                   }),
             )
-            // MarkerLayer(
-            //   markers: [
-            //     Marker(
-            //       point: initialPos,
-            //       width: double.infinity,
-            //       height: double.infinity,
-            //       child: GestureDetector(
-            //         child: Center(
-            //           child: Icon(
-            //             Icons.location_on,
-            //             color: Colors.blue,
-            //             size: 40.0,
-            //           ),
-            //         ),
-            //         onTap: () {
-            //           final snackBar =
-            //               SnackBar(content: Text('Tap $initialPos'));
-            //           ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            //         },
-            //       ),
-            //     ),
-            //     Marker(
-            //       point: initialPos,
-            //       child: Icon(
-            //         Icons.circle,
-            //         size: 1,
-            //         color: Colors.red,
-            //       ),
-            //     ),
-            //   ],
-            // ),
           ]),
-    );
+    ));
   }
 }

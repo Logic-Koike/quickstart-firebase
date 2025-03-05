@@ -6,21 +6,25 @@ import 'package:latlong2/latlong.dart';
 
 class TestMarkers {
   static const osakaStation = LatLng(34.702485, 135.495951);
+  static const maxClusterRadius = 100;
 
   static List<Marker> getTestMakers() {
     var markers = <Marker>[];
 
-    markers.add(Marker(
-      point: osakaStation,
-      child: const Icon(Icons.pin_drop),
-    ));
-
-    final totalMarkers = 1000;
+    final totalMarkers = 3000;
 
     final minLatitude = 34.5;
     final maxLatitude = 35.0;
     final minLongitude = 135.0;
     final maxLongitude = 135.6;
+
+    // 同一地点
+    for (var i = 0; i < 30; i++) {
+      markers.add(Marker(
+        point: osakaStation,
+        child: const Icon(Icons.error),
+      ));
+    }
 
     for (var i = 0; i < totalMarkers; i++) {
       final latitude =

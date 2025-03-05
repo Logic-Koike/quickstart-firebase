@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
         '/top': (context) => const TopPage(),
         '/login': (context) => const LoginPage(),
         '/input': (context) => const InputTestDataPage(),
+        '/map': (context) => const MapPage(),
       },
     );
   }
