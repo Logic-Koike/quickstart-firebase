@@ -53,6 +53,11 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
                 // "https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png",
                 userAgentPackageName:
                     'com.logic.exampleapp', // Add your app identifier
+                tileProvider: NetworkTileProvider(
+                  headers: {
+                    "Access-Control-Allow-Origin": "*",
+                  },
+                ),
               ),
               RichAttributionWidget(attributions: [
                 TextSourceAttribution(
