@@ -30,4 +30,7 @@ samples, guidance on mobile development, and a full API reference.
 ## Azureデプロイ
 
 1. Azure CLIのインストール : `winget install --exact --id Microsoft.AzureCLI`
-2. Azure ログイン：`
+2. Azure ログイン：`az login`
+3. `terraform init`
+4. `terraform plan`
+5. `terraform apply`
