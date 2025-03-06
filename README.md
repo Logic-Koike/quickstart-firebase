@@ -25,4 +25,9 @@ samples, guidance on mobile development, and a full API reference.
 5. `dart pub global activate flutterfire_cli`を実行
 6. プロジェクトディレクトリで`flutterfire configure --project=fir-test-3d89d`を実行
     - プロジェクトごとにIDは異なる
-7. 
+
+
+## Azureデプロイ
+
+1. Azure CLIのインストール : `winget install --exact --id Microsoft.AzureCLI`
+2. Azure ログイン：`

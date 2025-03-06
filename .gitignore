@@ -46,3 +46,13 @@ app.*.map.json
 
 # FVM Version Cache
 .fvm/
+
+#  Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# .tfvars files
+*.tfvars
