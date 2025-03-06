@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:quickstart_firebase/pages/input_test_data_page.dart';
 import 'package:quickstart_firebase/pages/login_page.dart';
+import 'package:quickstart_firebase/pages/toggle_tracing.dart';
 import 'package:quickstart_firebase/pages/top_page.dart';
 import 'firebase_options.dart';
 import 'pages/map_page.dart';
@@ -91,6 +92,14 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ListTile(
+              title: Text("位置情報切り替え"),
+              onTap: () {
+                _navigatorKey.currentState?.pushNamed('/toggle_tracing');
+                _updateTitle("toggle_tracing");
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
               title: Text('マップ'),
               onTap: () {
                 _navigatorKey.currentState?.pushReplacementNamed('/map');
@@ -122,6 +131,10 @@ class _MyHomePageState extends State<MyHomePage> {
             case '/input':
               return MaterialPageRoute(builder: (context) {
                 return InputTestDataPage();
+              });
+            case "/toggle_tracing":
+              return MaterialPageRoute(builder: (context) {
+                return ToggleTracingPage();
               });
             default:
               builder = (context) => Center(child: Text('404'));
