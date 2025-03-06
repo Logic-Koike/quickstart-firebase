@@ -2,7 +2,7 @@ name: Deploy Flutter Web to Azure Static Web Apps
 on:
   push:
     branches:
-      - main
+      - map-tracing
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
