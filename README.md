@@ -34,3 +34,20 @@ samples, guidance on mobile development, and a full API reference.
 3. `terraform init`
 4. `terraform plan`
 5. `terraform apply`
+
+## Firebaseエミュレータ
+
+
+1. firebase CLIのインストール
+2. プロジェクトディレクトリで`firebase init`
+3. `firebase emulators:start`
+4. `main()`の中でエミュレータを利用するように設定
+
+``` dart
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  // Firebase Emulatorの利用
+  FirebaseFirestore.instance.useFirestoreEmulator("localhost", 8080);
+  await FirebaseAuth.instance.useAuthEmulator("localhost", 9099);
+```
