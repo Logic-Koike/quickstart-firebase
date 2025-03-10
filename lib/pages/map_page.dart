@@ -4,6 +4,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_animations/flutter_map_animations.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:quickstart_firebase/core/maptest/location_sender.dart';
 import 'package:quickstart_firebase/core/maptest/marker_widget.dart';
 import 'package:quickstart_firebase/core/model/danger_drive_marker.dart';
 import 'package:quickstart_firebase/pages/login_page.dart';
@@ -18,9 +19,10 @@ class MapPage extends StatefulWidget {
 class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
   final initialPos = LatLng(34.702485, 135.495951);
   final PopupController _popupController = PopupController();
-  late final List<Marker> markers;
+  late final List<Marker> initialMarkers;
   late final _animatedMapController = AnimatedMapController(vsync: this);
 
+  var placedMarkers = <Marker>[];
   var _centerPosition = LatLng(0, 0);
 
   static const _useTransformerId = 'useTransformerId';
@@ -31,12 +33,11 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
     setState(() {
       _centerPosition = camera.center;
     });
-    print("中央の座標: ${_centerPosition.latitude}, ${_centerPosition.longitude}");
   }
 
   @override
   void initState() {
-    markers = [];
+    initialMarkers = [];
     super.initState();
   }
 
@@ -99,7 +100,7 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
                           alignment: Alignment.center,
                           padding: const EdgeInsets.all(50),
                           maxZoom: 15,
-                          markers: markers,
+                          markers: initialMarkers,
                           onClusterTap: (cluster) {
                             _popupController.hideAllPopups();
                           },
@@ -158,7 +159,8 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
                               ),
                             );
                           }),
-                    )
+                    ),
+                    MarkerLayer(markers: placedMarkers),
                   ]),
             ),
             Center(
@@ -195,7 +197,18 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
               child: const Icon(Icons.location_on)),
           const SizedBox(height: 10),
           FloatingActionButton(
-              onPressed: () => {},
+              onPressed: () async {
+                await LocationSender.sendLocation("placed_coordinates",
+                    FirebaseAuth.instance.currentUser!.uid, _centerPosition);
+
+                setState(() {
+                  placedMarkers.add(Marker(
+                      width: 80.0,
+                      height: 80.0,
+                      point: _centerPosition,
+                      child: Icon(Icons.location_on, color: Colors.blue)));
+                });
+              },
               tooltip: "この地点を追加",
               child: Icon(Icons.add_location_alt,
                   color: Colors.orangeAccent.shade700)),
