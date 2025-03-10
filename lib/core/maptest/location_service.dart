@@ -3,6 +3,8 @@ import 'package:background_locator/location_dto.dart';
 import 'package:background_locator/settings/android_settings.dart';
 import 'package:background_locator/settings/ios_settings.dart';
 import 'package:background_locator/settings/locator_settings.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LocationService {
   static const String isolateName = 'LocatorIsolate';
@@ -15,16 +17,19 @@ class LocationService {
 
   // サーバーに送信
   static Future<void> sendLocationToServer(double lat, double lon) async {
-    const url = 'https://your-server.com/api/location'; // サーバーのエンドポイント
     try {
-      // await http.post(
-      //   Uri.parse(url),
-      //   body: {
-      //     'latitude': lat.toString(),
-      //     'longitude': lon.toString(),
-      //     'timestamp': DateTime.now().toIso8601String(),
-      //   },
-      // );
+      final uid = FirebaseAuth.instance.currentUser!.uid;
+      await FirebaseFirestore.instance
+          .collection("tracking_locations")
+          .doc(uid)
+          .collection("coordinates")
+          .doc()
+          .set({
+        'latitude': lat,
+        'longitude': lon,
+        'timestamp': DateTime.now(),
+      });
+
       print('位置情報を送信しました');
     } catch (e) {
       print('送信エラー: $e');

@@ -51,3 +51,6 @@ samples, guidance on mobile development, and a full API reference.
   FirebaseFirestore.instance.useFirestoreEmulator("localhost", 8080);
   await FirebaseAuth.instance.useAuthEmulator("localhost", 9099);
 ```
+
+バックグラウンド位置情報取得
+https://github.com/Yukams/background_locator_fixed/wiki/Setup#android

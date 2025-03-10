@@ -6,7 +6,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:quickstart_firebase/components/text_form_borders.dart';
 import 'package:quickstart_firebase/pages/input_test_data_page.dart';
 import 'package:quickstart_firebase/pages/login_page.dart';
-import 'package:quickstart_firebase/pages/toggle_tracing.dart';
+import 'package:quickstart_firebase/pages/toggle_tracing_page.dart';
 import 'package:quickstart_firebase/pages/top_page.dart';
 import 'firebase_options.dart';
 import 'pages/map_page.dart';

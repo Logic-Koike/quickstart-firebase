@@ -41,6 +41,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.6"
+  background_task:
+    dependency: "direct main"
+    description:
+      name: background_task
+      sha256: de4cfdff9e0b41b09ae62a28f64bed1d54281161ed630714f7239fe5fe868370
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.0+2"
   boolean_selector:
     dependency: transitive
     description:

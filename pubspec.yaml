@@ -43,6 +43,7 @@ dependencies:
   flutter_map_animations: ^0.8.0
   background_locator: ^1.6.12
   background_locator_2: ^2.0.6
+  background_task: ^0.2.0+2
 
 dev_dependencies:
   flutter_test:
