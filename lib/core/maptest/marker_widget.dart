@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:quickstart_firebase/core/model/danger_drive_marker.dart';
 
@@ -35,7 +34,7 @@ class TestMarkers {
       final longitude =
           minLongitude + Random().nextDouble() * (maxLongitude - minLongitude);
 
-      var widget = null;
+      Icon widget;
       if (i % 3 == 0) {
         widget = Icon(Icons.error, color: Colors.red);
       } else if (i % 3 == 1) {

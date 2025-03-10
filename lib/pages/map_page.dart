@@ -4,6 +4,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_animations/flutter_map_animations.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:quickstart_firebase/core/maptest/location_getter.dart';
 import 'package:quickstart_firebase/core/maptest/location_sender.dart';
 import 'package:quickstart_firebase/core/maptest/marker_widget.dart';
 import 'package:quickstart_firebase/core/model/danger_drive_marker.dart';
@@ -19,9 +20,10 @@ class MapPage extends StatefulWidget {
 class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
   final initialPos = LatLng(34.702485, 135.495951);
   final PopupController _popupController = PopupController();
-  late final List<Marker> initialMarkers;
+  late List<Marker> initialMarkers = [];
   late final _animatedMapController = AnimatedMapController(vsync: this);
 
+  var isInitialized = false;
   var placedMarkers = <Marker>[];
   var _centerPosition = LatLng(0, 0);
 
@@ -37,12 +39,24 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    initialMarkers = [];
+    initialize();
     super.initState();
+  }
+
+  Future<void> initialize() async {
+    initialMarkers = await LocationGetter.getLocations(
+        FirebaseAuth.instance.currentUser!.uid);
+    setState(() {
+      isInitialized = true;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    if (!isInitialized) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
     return Scaffold(
       body: Stack(
           // child: Placeholder(child: Text("Map Page")),
@@ -198,9 +212,6 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
           const SizedBox(height: 10),
           FloatingActionButton(
               onPressed: () async {
-                await LocationSender.sendLocation("placed_coordinates",
-                    FirebaseAuth.instance.currentUser!.uid, _centerPosition);
-
                 setState(() {
                   placedMarkers.add(Marker(
                       width: 80.0,
@@ -208,6 +219,8 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
                       point: _centerPosition,
                       child: Icon(Icons.location_on, color: Colors.blue)));
                 });
+                await LocationSender.sendLocation("placed_coordinates",
+                    FirebaseAuth.instance.currentUser!.uid, _centerPosition);
               },
               tooltip: "この地点を追加",
               child: Icon(Icons.add_location_alt,
