@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:quickstart_firebase/components/text_form_borders.dart';
 import 'package:quickstart_firebase/pages/input_test_data_page.dart';
 import 'package:quickstart_firebase/pages/login_page.dart';
 import 'package:quickstart_firebase/pages/toggle_tracing.dart';
@@ -10,6 +13,10 @@ import 'pages/map_page.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  // Firebase Emulatorの利用
+  FirebaseFirestore.instance.useFirestoreEmulator("localhost", 8080);
+  await FirebaseAuth.instance.useAuthEmulator("localhost", 9099);
 
   runApp(const MyApp());
 }
@@ -24,6 +31,13 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        inputDecorationTheme: InputDecorationTheme(
+          contentPadding: EdgeInsets.all(16),
+          focusedBorder: TextFormBorders.textFormFocusedBorder,
+          enabledBorder: TextFormBorders.textFormEnabledBorder,
+          focusedErrorBorder: TextFormBorders.textFormErrorBorder,
+          errorBorder: TextFormBorders.textFormErrorBorder,
+        ),
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
       routes: {
