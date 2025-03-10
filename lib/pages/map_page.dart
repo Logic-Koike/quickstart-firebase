@@ -118,47 +118,6 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
                           onClusterTap: (cluster) {
                             _popupController.hideAllPopups();
                           },
-                          popupOptions: PopupOptions(
-                              popupController: _popupController,
-                              popupBuilder: (context, marker) {
-                                // 実データにキャスト
-                                final dangerDriveMarker =
-                                    marker as DangerDriveMarker;
-
-                                return Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    border: Border.all(color: Colors.blue),
-                                    color: Colors.white,
-                                  ),
-                                  width: 200,
-                                  height: 200,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "ポップアップ表示",
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        Text(
-                                            "緯度 ${dangerDriveMarker.point.latitude}"),
-                                        Text(
-                                            "経度 ${dangerDriveMarker.point.longitude}"),
-                                        Text(
-                                            "危険運転種別 ${dangerDriveMarker.dangerLevel}"),
-                                        Text(
-                                          "ID : ${dangerDriveMarker.markerId}",
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              }),
                           builder: (context, markers) {
                             // クラスターの表示
                             return Container(
