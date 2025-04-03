@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -69,6 +70,15 @@ class _LoginPageState extends State<LoginPage> {
                       await _signin();
                     },
                     child: Text('Sign In')),
+                ElevatedButton(
+                    onPressed: () async {
+                      // fetch test API
+                      var url = Uri.parse(
+                          'https://jsonplaceholder.typicode.com/posts/1');
+                      var response = await http.get(url);
+                      print(response);
+                    },
+                    child: Text('Fetch Test API')),
               ],
             )));
   }
